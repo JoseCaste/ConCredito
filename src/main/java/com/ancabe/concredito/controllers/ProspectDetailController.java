@@ -12,11 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.ancabe.concredito.models.Docs;
 import com.ancabe.concredito.models.Evaluation;
@@ -51,17 +47,18 @@ public class ProspectDetailController {
 	}
 	@PostMapping("/evaluateProspect")
 	public String saveChangeEvaluation(Model model, HttpSession session,@ModelAttribute(name="prospect") Evaluation evaluation) {
-		//System.out.println(evaluation.toString());
+		evaluation=detailServices.save(evaluation);
+		List<ProspectEvaluation> evaluations= detailServices.findAll();
+		model.addAttribute("prospects", evaluations);
+		model.addAttribute("prospect_found", evaluation);
 		return "prospect-evaluation";
 	}
 	@GetMapping("/specificProspect")
-	public String searchProspect(Model model, HttpSession session, @ModelAttribute(name="prospect") Evaluation prospect) {
-		Evaluation evaluation= evaluationServices.findById(prospect.getId_evaluation());
-		EvaluationDetails evaluation_= new EvaluationDetails(prospect.getId_evaluation(),evaluation.getName(), evaluation.getFirst_lastname(), evaluation.getSecond_lastname(), evaluation.getAddress(), evaluation.getAddress_number(), evaluation.getColonia(), evaluation.getPostal_code(), evaluation.getContact(), evaluation.getRfc(), evaluation.getStatus(), evaluation.getObservations());
-		System.out.println(evaluation_.toString());
+	public String searchProspect(Model model, HttpSession session, @RequestParam(name="id")Integer id) {
+		Evaluation evaluation= evaluationServices.findById(id);
 		List<ProspectEvaluation> evaluations= detailServices.findAll();
 		model.addAttribute("prospects", evaluations);
-		model.addAttribute("prospect_found", evaluation_);
+		model.addAttribute("prospect_found", evaluation);
 		return "prospect-evaluation";
 	}
 	@GetMapping("/download/{id}")

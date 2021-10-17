@@ -46,4 +46,8 @@ public class EvaluationDetailServices {
 			return new ProspectEvaluation(item.getId_evaluation(),item.getName(), item.getFirst_lastname(), item.getSecond_lastname());
 		}).collect(Collectors.toList());
 	}
+
+    public Evaluation save(Evaluation evaluation) {
+		return evaluationRepository.save(evaluation);
+    }
 }

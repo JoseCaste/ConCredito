@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import lombok.ToString;
 public class Evaluation {
 	public static final String SENDS="ENVIADO";
 	public static final String REJECT="RECHAZADO";
-	public static final String ALLOW="AUTORIZADO";
+	public static final String allow="AUTORIZADO";
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_evaluation")
@@ -50,6 +51,7 @@ public class Evaluation {
 	private String rfc;
 	@Column(name="observations")
 	private String observations;
+	@Transient
 	 @OneToMany(mappedBy = "id_doc", cascade = {
 		        CascadeType.ALL
 		    })
