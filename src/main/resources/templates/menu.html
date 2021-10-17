@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Panel de control</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<style>
+		.prospect_list {
+			width: 50%;
+			margin: 0px auto;
+			margin-top: 5%;
+			border-radius: 5px;
+		}
+	</style>
+</head>
+
+<body style="background-color: rgb(252, 252, 252);background-image: url('/img/postulacion.png');">
+	<header>
+		<div class="bg-warning py-2">
+			<div th:if="${session.user != null}">
+				Bienvenido <span th:text="${session.user}"> </span>
+			</div>
+		</div>
+
+		<nav id="navbar_top" class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="container">
+				<a class="navbar-brand" href="#">Panel de administración de prospectos</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="main_nav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" th:href="@{/prospect-registration}"> Captura de
+								prospecto </a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/prospect-details/evaluateProspect}"> Evaluar
+								prospecto </a></li>
+						<li class="nav-item">
+							<form th:action="@{/logout}" th:method="GET">
+								<a class="nav-link" th:href="@{/logout}">Cerrar sesión</a>
+							</form>
+						</li>
+					</ul>
+				</div> <!-- navbar-collapse.// -->
+			</div> <!-- container-fluid.// -->
+		</nav>
+	</header>
+	<div class="prospect_list border border-white">
+		<div class="card" style="width: 100%;margin-top: 5%;margin: 0px auto;">
+			<div class="card-body">
+				<h5 class="card-title">Lista de prospecto</h5>
+				<p class="card-text">
+				<table class="table text-center">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">Prospecto</th>
+							<th scope="col">Apellido paterno</th>
+							<th scope="col">Apellido materno</th>
+							<th scope="col">Estado</th>
+							<th scope="col">Ver</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:if="${prospect != null}" th:each="prospect: ${prospect_list}">
+							<td th:text="${prospect.name}"></td>
+							<td th:text="${prospect.lastname}"></td>
+							<td th:text="${prospect.surname}"></td>
+							<td th:text="${prospect.status}"></td>
+							<td>
+								<!--a th:onclick='userDetails("[[${prospect.id}]]")' )
+								style="cursor: pointer;color: darkblue;" /-->
+								<a th:href="@{/prospect-details/{id}(id=${prospect.id})}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-eye" viewBox="0 0 16 16">
+										<path
+											d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+										<path
+											d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+									</svg>
+								</a>
+
+
+
+								</a>
+							</td>
+						</tr>
+						<div th:if="${prospect_list==null || prospect_list.isEmpty()}" class="alert alert-info"
+							role="alert">
+							No hay prospectos registrados
+						</div>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+			</div>
+		</div>
+	</div>
+
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"
+		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+		integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+		crossorigin="anonymous"></script>
+	<!--script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/sweetalert.min.js}"></script-->
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			window.addEventListener('scroll', function () {
+				if (window.scrollY > 50) {
+					document.getElementById('navbar_top').classList.add('fixed-top');
+					navbar_height = document.querySelector('.navbar').offsetHeight;
+					document.body.style.paddingTop = navbar_height + 'px';
+				} else {
+					document.getElementById('navbar_top').classList.remove('fixed-top');
+					document.body.style.paddingTop = '0';
+				}
+			});
+		});
+	</script>
+	<script>
+		function removeModal() {
+			document.querySelector("#exampleModal").innerHTML = "";
+			document.querySelector("#exampleModal").innerHTML = ""
+			document.querySelector("#btn_modal").remove()
+		}
+		function loadSource(json) {
+			let list = json.docs_name;
+			//console.log(list)
+			for (var i = 0; i < list.length; i++) {
+				console.log(list[i])
+			}
+			return "<label for='name' class='text-center'>Nombre</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.name + "' />"
+				+ "<label for='name' class='text-center'>Apellido paterno</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.lastname + "' />"
+				+ "<label for='name' class='text-center'>Apellido materno</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.surname + "' />"
+				+ "<label for='name' class='text-center'>Dirección</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.address + "No." + json.addressnumber + "' />"
+				+ "<label for='name' class='text-center'>Colonia</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.colonia + "' />"
+				+ "<label for='name' class='text-center'>Código postal</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.postalCode + "' />"
+				+ "<label for='name' class='text-center'>Contacto</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.contact + "' />"
+				+ "<label for='name' class='text-center'>RFC</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.rfc + "' />"
+				+ "<label for='name' class='text-center'>Estado</label>" +
+				"<input disabled type='text'" +
+				"class='form-control text-center'style='width:70%;margin: 0px auto' value='" + json.status + "' />"
+		}
+		function userDetails(id_detail) {
+			let url = "[[@{/evaluation-details}]]/" + id_detail;
+			let xhr = new XMLHttpRequest();
+
+			xhr.open('GET', url);
+			xhr.responseType = 'json';
+			xhr.send();
+			xhr.onload = function () {
+				let responseObj = xhr.response;
+				console.log(responseObj)
+				let dataInput = loadSource(xhr.response);
+				let buttonModal = document.createElement("BUTTON");
+				buttonModal.setAttribute("id", 'btn_modal')
+				buttonModal.hidden = true
+				buttonModal.innerText = "HI"
+				buttonModal.setAttribute("data-bs-toggle", "modal")
+				buttonModal.setAttribute("data-bs-target", "#exampleModal");
+				$('#exampleModal').append("<div class='modal-dialog'>" +
+					"<div class='modal-content'>" +
+					"<div class='modal-header'>" +
+					"<h5 class='modal-title' id='exampleModalLabel'>Datos generales</h5>" +
+					"<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
+					"</div>" +
+					loadSource(responseObj)
+					+
+					"<div class='modal-footer'>" +
+					"<button type='button' class='btn btn-secondary' data-bs-dismiss='modal' onclick='removeModal()'>Close</button>" +
+					"</div>" +
+					"</div>" +
+					"</div>" +
+					"</div>")
+				document.body.append(buttonModal)
+				buttonModal.click()
+				/*console.log(responseObj.files[0].type.indexof("/",0));
+				let type=responseObj.docs[0].name;
+				let filename=responseObj.docs[0].name
+				filename.substring(0,filename.indexOf("."))
+				type.substring(type.indexOf(".")+1)
+				console.log(type);
+				console.log(filename)
+				const blob = new Blob([responseObj.docs[0].file],{type:responseObj.docs[0].type});
+				blob.type='pdf'
+				console.log(blob)
+				const fileName = `${filename}`;
+				if (navigator.msSaveBlob) {
+
+					navigator.msSaveBlob(blob, fileName);
+				} else {
+					const link = document.createElement('a');
+					// Browsers that support HTML5 download attribute
+					if (link.download !== undefined) {
+						const url = URL.createObjectURL(blob);
+						link.setAttribute('href', url);
+						link.setAttribute('download', fileName);
+						link.style.visibility = 'hidden';
+						document.body.appendChild(link);
+						link.click();
+						document.body.removeChild(link);
+					}
+				}*/
+			};
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Registro de prospecto</title>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<body style="background-image: url('/img/postulacion.png');">
+	<header>
+		<nav id="navbar_top" class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="container">
+				<a class="navbar-brand" th:href="@{/menu}">Panel de administración de prospectos</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="main_nav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" th:href="@{/prospect-registration}"> Captura de
+								prospecto </a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/prospect-evaluation}"> Evaluar
+								prospecto </a></li>
+						<li class="nav-item">
+							<form th:action="@{/logout}" th:method="GET">
+								<a class="nav-link" th:href="@{/logout}">Cerrar sesión</a>
+							</form>
+						</li>
+					</ul>
+				</div> <!-- navbar-collapse.// -->
+			</div> <!-- container-fluid.// -->
+		</nav>
+	</header>
+	<div class="container" style="padding-top: 5%;">
+		<div class="row" style="width: 100%;">
+			<div class="col-lg-7 mx-auto" style="width: 100%;">
+				<div class="card mt-2 mx-auto p-4 bg-light">
+					<div class="card-body bg-light">
+						<h1 class="text-center">Datos del prospecto</h1>
+						<div class="alert text-center"
+							th:classappend="${evaluation_details.status == 'ENVIADO'} ? 'alert-primary':(${evaluation_details.status=='AUTORIZADO'}? 'alert-success':'alert-danger')"
+							role="alert" th:text="${evaluation_details.status}">
+
+						</div>
+					</div>
+					<div class="container">
+						<form id="contact-form" method="GET" role="form" th:action="@{/menu}">
+							<div class="row">
+								<div class="col-sm">
+									<div class="form-group"> <label for="name">Nombre</label>
+										<input disabled th:value="${evaluation_details.name}" id="name" type="text"
+											name="name" class="form-control" placeholder="Introduce el nombre"
+											required="required" data-error="Campo requerido.">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group"> <label for="lastname">Apellido paterno
+										</label>
+										<input disabled th:value="${evaluation_details.lastname}" id="first_lastname"
+											type="text" name="lastname" class="form-control"
+											placeholder="Introduce el apellido paterno" required="required"
+											data-error="Campo requerido.">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group"> <label for="surname">Apellido paterno</label>
+										<input disabled th:value="${evaluation_details.surname}" id="second_lastname"
+											type="text" name="surname" class="form-control"
+											placeholder="Introduce el apellido materno " required="required"
+											data-error="Campo requerido.">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm">
+									<div class="form-group"> <label for="addressnumber">Número</label>
+										<input disabled th:value="${evaluation_details.addressnumber}"
+											id="address_number" type="text" name="addressnumber" class="form-control"
+											placeholder="Introduce el numero de calle " required="required"
+											data-error="Número de calle requerido.">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group"> <label for="address">Calle</label>
+										<input disabled th:value="${evaluation_details.address}" id="address"
+											type="text" name="address" class="form-control"
+											placeholder="Introcuce el domicilio " required="required"
+											data-error="Domicilio requerido.">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group"> <label for="colonia">Colonia</label>
+										<input disabled th:value="${evaluation_details.colonia}" id="colonia"
+											type="text" name="colonia" class="form-control"
+											placeholder="Introcuce la colonia" required="required"
+											data-error="Colonia requerido.">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm">
+									<div class="form-group"> <label for="postal_code">Código postal</label>
+										<input disabled th:value="${evaluation_details.postalCode}" id="postal_code"
+											type="text" name="postal_code" class="form-control"
+											placeholder="Código postal" required="required"
+											data-error="Código postal requerido.">
+									</div>
+								</div>
+								<div class="col-sm">
+									<div class="form-group">
+										<label for="contact">Número de telefono</label>
+										<input disabled th:value="${evaluation_details.contact}" id="contact"
+											type="text" name="contact" class="form-control"
+											placeholder="Número de teléfono" required="required"
+											data-error="Número de telefono requerido.">
+									</div>
+									<span id="tel_error" name="tel_error" style="color: red;"></span>
+								</div>
+								<div class="col-sm">
+									<div class="form-group"> <label for="rfc">RFC</label>
+										<input disabled th:value="${evaluation_details.rfc}" id="rfc" type="text"
+											name="rfc" class="form-control" placeholder="RFC" required="required"
+											data-error="RFC requerido.">
+									</div>
+								</div>
+								<div th:if="${evaluation_details.observations!=null}" class="form-group"> <label
+										for="observations">Observaciones</label>
+									<textarea class="form-control" id="observations"
+										th:if="${evaluations_details=='RECHAZADO'}"
+										th:text="${evaluation_details.observations}" rows="3"></textarea>
+								</div>
+							</div>
+
+							<div class="input-group mb-3" style="margin-top: 10px;">
+								<div class="dropdown">
+									<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="docs_link"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Archivos
+									</a>
+
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+										<li th:each="item: ${list}">
+											<a class="dropdown-item"
+												th:href="@{/prospect-details/download/{id}(id=${item.id})}"
+												th:text="${item.name}"></a>
+										</li>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 text-center" style="width: 100%;margin-top: 15px;">
+									<a type="submit" class="btn btn-primary btn-send pt-2 btn-block "
+										th:href="@{/menu}">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-arrow-90deg-left" viewBox="0 0 16 16">
+											<path fill-rule="evenodd"
+												d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z" />
+										</svg> &nbsp; &nbsp;Regresar
+									</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div> <!-- /.8 -->
+		</div> <!-- /.row-->
+	</div>
+	</div>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/sweetalert.min.js}"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+</body>
+
+</html>
