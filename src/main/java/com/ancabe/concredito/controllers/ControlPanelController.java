@@ -28,11 +28,13 @@ public class ControlPanelController {
 	private EvaluationServices evaluationServices;
 	@GetMapping("/menu")
 	public String menu(Model model,HttpSession session) {
-		List<EvaluationDetails> prospects=evaluationServices.findAll().stream().map(item ->{
-			return new EvaluationDetails(item.getId_evaluation(),item.getName(),item.getFirst_lastname(),item.getSecond_lastname(),item.getStatus());
-		}).collect(Collectors.toList());
-		model.addAttribute("prospect_list", prospects);
-		return "menu";
+		if(session.getAttribute("user")!=null){
+			List<EvaluationDetails> prospects=evaluationServices.findAll().stream().map(item ->{
+				return new EvaluationDetails(item.getId_evaluation(),item.getName(),item.getFirst_lastname(),item.getSecond_lastname(),item.getStatus());
+			}).collect(Collectors.toList());
+			model.addAttribute("prospect_list", prospects);
+			return "menu";
+		}return"redirect:/";
 	}
 	@PostMapping("/menu")
 	public String authentication(Model model,@ModelAttribute UserPojo user, HttpSession session) {
