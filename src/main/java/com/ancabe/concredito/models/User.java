@@ -1,14 +1,13 @@
 package com.ancabe.concredito.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
+import java.util.Set;
 
 @Data
 @ToString
@@ -16,14 +15,30 @@ import lombok.ToString;
 @Entity(name = "user")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
-	private String name;
-	private String email;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+
+	@Column
+	private String username;
+
+	@Column
 	private String password;
-	public User() {
-		
+
+	@Column
+	private boolean enabled;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="authorities_users",
+			joinColumns=@JoinColumn(name="usuario_id"),
+			inverseJoinColumns=@JoinColumn(name="authority_id"))
+	private List<Authority> authority;
+
+	public User(String username, String password, List<Authority> authority) {
+		this.username = username;
+		this.password = password;
+		this.authority = authority;
 	}
-	
+
+	public User() {
+	}
 }
