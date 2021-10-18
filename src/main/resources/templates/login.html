@@ -31,13 +31,16 @@
                   <input id="password" name="password" type='password' placeholder="contraseña" class="-mx-6 px-8 w-full border rounded px-3 py-1 text-gray-700" />
                 </div>
             </div>
+                <div class="w-full mb-2 text-center">
+                    <a th:href="@{/sign-up}" class="text-center" style="color:blue">Crear cuenta promotor</a>
+                </div>
             <div class="w-full mb-2">
                 <h5 th:if="${error != null}" class="text-center" style="color: red;" th:utext="${error}">
                 </h5>
             </div>
             <div class="mt-8 flex justify-between">
 				<div>
-                  <input style="cursor: pointer;" type='submit' class="bg-yellow-400 text-xs text-gray-700 rounded px-4 py-2" text="Iniciar sesión">
+                  <input style="cursor: pointer;" type='submit' class="bg-yellow-400 text-xs text-gray-700 rounded px-4 py-2" value="Iniciar sesión">
                 </div>
             </div>
           </div>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="w3.org/1999/xhtml" xmlns:th="thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creación de cuenta</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<style>
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+
+</style>
+<body>
+<form th:action="@{/sign-up}" style="border:1px solid #ccc" method="POST" th:object="${promotor}">
+    <div class="container" style="width:50%; margin: 0px auto">
+        <div class="alert alert-success text-center" role="alert" th:if="${save_success}!=null" th:text="${save_success}"></div>
+        <h1>Nueva cuenta de usuario</h1>
+        <p>LLenar el formulario</p>
+        <hr>
+        <label for="name"><b>Nombre</b></label>
+        <input type="text" placeholder="Nombre de promotor" name="name" required th:field="*{name}">
+
+        <label for="lastname"><b>Apellido</b></label>
+        <input type="text" placeholder="Apellido de promotor" name="lastname" required th:field="*{lastname}">
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" required th:field="*{email}">
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required id="password" th:field="*{password}">
+
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="psw-repeat" required onblur="checkPassword(this.value)">
+        <div class="w-full mb-2">
+            <h5 class="text-center" style="color: red;" id="error">
+            </h5>
+        </div>
+        <div class="w-full mb-2">
+            <h5 th:if="${error != null}" class="text-center" style="color: red;" th:utext="${error}">
+            </h5>
+        </div>
+        <p>Para crear una cuenta debes aceptar <a href="#" style="color:dodgerblue">Términos y condiciones de privacidad</a>.</p>
+        <div class="clearfix">
+            <button type="button" class="cancelbtn" onclick="redirect()">Cancelar</button>
+            <button type="submit" class="signupbtn" id="create">Crear cuenta</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>
+<script>
+    function checkPassword(target){
+        if(target != document.querySelector("#password").value){
+            document.querySelector("#error").innerText="Las contraseñas no coinciden";
+            document.querySelector("#create").disabled=true;
+            return false;
+        }else{
+         document.querySelector("#error").innerText="";
+        document.querySelector("#create").disabled=false;
+        return true;
+        }
+    }
+    function redirect(){
+        window.location.href="[[@{/login}]]"
+    }
+    </script>
+</body>
+</html>

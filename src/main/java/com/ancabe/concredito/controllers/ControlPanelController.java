@@ -56,7 +56,7 @@ public class ControlPanelController {
 		session.invalidate();
 		return "redirect:/signin";
 	}
-	public String getMd5(String input)
+	public static String getMd5(String input)
     {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

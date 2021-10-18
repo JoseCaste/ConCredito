@@ -14,5 +14,8 @@ public class PromotorService{
 	public Promotor findByEmail(String email) {
 		return promotorRepository.findByEmail(email);
 	}
-	
+
+    public Promotor save(Promotor promotor) {
+		return promotorRepository.save(promotor);
+    }
 }
