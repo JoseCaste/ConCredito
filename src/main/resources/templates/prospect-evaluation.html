@@ -104,11 +104,11 @@
                                 </div>
                             </div>
                             <div class="col-sm">
-                                <div class="form-group"><label for="second_lastname">Apellido paterno
-                                    *</label>
+                                <div class="form-group"><label for="second_lastname">Apellido materno
+                                    </label>
                                     <input id="second_lastname" type="text"
                                            name="second_lastname" class="form-control"
-                                           placeholder="Introduce el apellido materno *" required="required"
+                                           placeholder="Introduce el apellido materno"
                                            data-error="Campo requerido." th:if="${prospect_found !=null }"
                                            th:value="${prospect_found.second_lastname}">
                                 </div>
@@ -210,7 +210,7 @@
 <script>
 		function validaTelNumber(target) {
 			document.querySelector("#tel_error").innerHTML = ""
-			if (target.value.length < 10 || !target.value.match(/^\d{10}$/)) {
+			if (target.value.length < 10 || !target.value.match(/^\d{10}$/) || target.value.length >10) {
 				document.querySelector("#tel_error").innerHTML = "Número no válido"
 			}
 		}
