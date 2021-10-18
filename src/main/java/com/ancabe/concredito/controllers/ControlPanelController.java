@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.ancabe.concredito.models.Promotor;
 import com.ancabe.concredito.pojo.EvaluationDetails;
-import com.ancabe.concredito.pojo.UserPojo;
+import com.ancabe.concredito.pojo.UserLogin;
 import com.ancabe.concredito.services.EvaluationServices;
 import com.ancabe.concredito.services.PromotorService;
 
@@ -37,7 +37,7 @@ public class ControlPanelController {
 		}return"redirect:/";
 	}
 	@PostMapping("/menu")
-	public String authentication(Model model,@ModelAttribute UserPojo user, HttpSession session) {
+	public String authentication(Model model, @ModelAttribute UserLogin user, HttpSession session) {
 		Promotor promotor = promotorService.findByEmail(user.getEmail());
 		if(promotor!=null &&promotor.getPassword().equals(getMd5(user.getPassword()))) {
 			session.setAttribute("user", promotor.getName());
@@ -51,10 +51,6 @@ public class ControlPanelController {
 		model.addAttribute("error", "Credenciales incorrectas");
 		return "login";
 	}
-	/*@GetMapping("/prospect-details/{id}")
-	public String prospectDetails(@PathVariable String id,Model model, HttpSession session) {
-	    return "menu";
-	}*/
 	@GetMapping("/logout")
 	public String loguout(Model model, HttpSession session) {
 		session.invalidate();
