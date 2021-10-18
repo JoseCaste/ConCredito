@@ -20,6 +20,7 @@ import com.ancabe.concredito.models.Docs;
 import com.ancabe.concredito.models.Evaluation;
 import com.ancabe.concredito.services.DocsService;
 import com.ancabe.concredito.services.EvaluationServices;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProspectRegistrationController {
@@ -30,12 +31,11 @@ public class ProspectRegistrationController {
 
 	@GetMapping("/prospect-registration")
 	public String prospectRegistration(@ModelAttribute(name = "prospect") Evaluation prospect) {
-		return "prospect_form";
+		return "prospect-form";
 	}
 
 	@PostMapping("/saveProspect")
-	public String saveProspect(Model model, @ModelAttribute(name = "prospect") Evaluation prospect,
-			BindingResult result, MultipartFile[] files, HttpSession session) {
+	public String saveProspect(Model model, @ModelAttribute(name = "prospect") Evaluation prospect, RedirectAttributes redirectAttributes, MultipartFile[] files, HttpSession session) {
 		List<MultipartFile> files_ = new ArrayList<>();
 		addFilesList(files,files_);
 		
@@ -52,14 +52,12 @@ public class ProspectRegistrationController {
 		for (Docs docs_ : docs) {
 			docs_.setEvaluation(prospect);
 		}
-		docs = docsService.saveAllDoc(docs);
-		//docs = docsService.saveAllDoc(docs);
-		model.addAttribute("save_success", "Prospecto guardado");
-		return "prospect_form";
+		docsService.saveAllDoc(docs);
+		redirectAttributes.addFlashAttribute("save_success", "Prospecto guardado");
+		return "redirect:/prospect-registration";
 	}
 
 	private List<MultipartFile>  addFilesList(MultipartFile[] files, List<MultipartFile> files_) {
-		// TODO Auto-generated method stub
 		for (MultipartFile multipartFile : files) {
 			files_.add(multipartFile);
 		}
