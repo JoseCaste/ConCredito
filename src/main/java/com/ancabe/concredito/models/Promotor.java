@@ -13,7 +13,7 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor
-@Entity
+@Entity(name="promotor")
 public class Promotor {
 
 	@Id
