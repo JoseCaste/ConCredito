@@ -76,7 +76,7 @@
                                        required="required"
                                        data-error="Campo requerido." th:if="${prospect_found !=null }"
                                        th:value="${prospect_found.id_evaluation}">
-                                <select class="form-select" name="status">
+                                <select class="form-select" name="status" onchange="ifReject(this.value)">
                                     <option value="AUTORIZADO">
                                         Autorizar
                                     </option>
@@ -172,7 +172,7 @@
                         <div lass="form-group"><label for="observations">Observaciones</label>
                             <textarea class="form-control" id="observations" rows="3" name="observations"
                                       required th:if="${prospect_found !=null }"
-                                      th:text="${prospect_found.observations}"></textarea>
+                                      th:text="${prospect_found.observations}" disabled="true"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center" style="width: 100%;margin-top: 15px;">
@@ -228,6 +228,9 @@
 					}
 				});
 
+		}
+		function ifReject(value){
+		    document.querySelector("#observations").disabled=(value=='AUTORIZADO' ? true : false);
 		}
 		$(".custom-file-input").on("change", function () {
 			var files = Array.from(this.files)

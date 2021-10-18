@@ -128,8 +128,7 @@
 								<div th:if="${evaluation_details.observations!=null}" class="form-group"> <label
 										for="observations">Observaciones</label>
 									<textarea class="form-control" id="observations"
-										th:if="${evaluations_details=='RECHAZADO'}"
-										th:text="${evaluation_details.observations}" rows="3"></textarea>
+										th:text="${evaluation_details.observations}" rows="3" disabled></textarea>
 								</div>
 							</div>
 
