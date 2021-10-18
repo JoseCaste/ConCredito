@@ -58,5 +58,8 @@ public class EvaluationDetails implements Serializable{
 		this.status = status;
 		this.observations=observations;
 	}
+
+	public EvaluationDetails(String name, String first_lastname, String second_lastname, String address, Integer address_number, String colonia, String postal_code, String contact, String rfc, String status, List<String> docs_name) {
+	}
 }
 

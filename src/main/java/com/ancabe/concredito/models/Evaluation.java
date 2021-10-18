@@ -24,7 +24,7 @@ import lombok.ToString;
 public class Evaluation {
 	public static final String SENDS="ENVIADO";
 	public static final String REJECT="RECHAZADO";
-	public static final String allow="AUTORIZADO";
+	public static final String ALLOW="AUTORIZADO";
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_evaluation")

@@ -8,9 +8,6 @@ import lombok.ToString;
 @ToString
 public class DocsDetail implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;

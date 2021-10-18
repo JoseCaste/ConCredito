@@ -62,7 +62,7 @@ public class ProspectDetailController {
 		return "prospect-evaluation";
 	}
 	@GetMapping("/download/{id}")
-	public ResponseEntity<Resource> dowloadFile(Model model, HttpSession session, @PathVariable (name ="id") Integer id) {
+	public ResponseEntity<Resource> downloadFile(Model model, HttpSession session, @PathVariable (name ="id") Integer id) {
 		Docs docs=docsRepository.findById(id).get();
 		return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(docs.getType()))

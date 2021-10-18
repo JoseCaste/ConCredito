@@ -138,7 +138,7 @@
 	<script>
 		function validaTelNumber(target) {
 			document.querySelector("#tel_error").innerHTML = ""
-			if (target.value.length < 10 || !target.value.match(/^\d{10}$/)) {
+			if (target.value.length < 10 || !target.value.match(/^\d{10}$/) || target.value.length > 10) {
 				document.querySelector("#tel_error").innerHTML = "Número no válido"
 			}
 		}
