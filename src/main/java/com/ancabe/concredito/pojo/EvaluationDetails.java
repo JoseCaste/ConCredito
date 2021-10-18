@@ -21,8 +21,7 @@ public class EvaluationDetails implements Serializable{
 	private String rfc;
 	private String status;
 	private String observations;
-	private List<DocsPojo> docs_name;
-	//private List<DocsPojo> docs;
+	private List<DocsDetail> docs_name;
 	public EvaluationDetails(Integer id,String name, String lastname, String surname, String status) {
 		this.id=id;
 		this.name = name;
@@ -31,7 +30,7 @@ public class EvaluationDetails implements Serializable{
 		this.status = status;
 	}
 	public EvaluationDetails(Integer id,String name, String lastname, String surname, String address, Integer addressnumber,
-			String colonia, String postalCode, String contact, String rfc, String status,String observations,List<DocsPojo> docs_name) {
+			String colonia, String postalCode, String contact, String rfc, String status,String observations,List<DocsDetail> docs_name) {
 		this.name = name;
 		this.lastname = lastname;
 		this.surname = surname;
